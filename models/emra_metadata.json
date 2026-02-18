@@ -1,0 +1,18 @@
+{
+  "project": "EMRA \u2014 Early Metabolic Risk Assessment",
+  "notebook_ssot": "03_model_training.ipynb",
+  "features": [
+    "LBXGLU",
+    "LBXGH",
+    "LBXTR",
+    "BMXBMI"
+  ],
+  "reference_population": "hold-out test set",
+  "calibration": "population-relative percentile (20\u201390)",
+  "model": "LogisticRegression (balanced)",
+  "metrics": {
+    "roc_auc": 0.9583159198204473,
+    "recall@0.5": 0.8757062146892656
+  },
+  "disclaimer": "Research artifact. Population-level patterns. Not diagnostic."
+}

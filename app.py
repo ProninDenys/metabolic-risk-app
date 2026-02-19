@@ -314,54 +314,65 @@ st.markdown("""
 }
 
 /* Modern Button */
-/* Center button container */
-.stButton {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin: 2rem 0;
+/* Modern Button - Исправленная версия */
+div.stButton {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 2rem 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
 }
 
-/* Button styling */
-.stButton > button {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    padding: 0.85rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: auto;
-    min-width: 240px;
-    max-width: 100%;
-    margin: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+div.stButton > button {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.85rem 2rem !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    border-radius: 16px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    width: auto !important;
+    min-width: 240px !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    float: none !important;
+    display: inline-block !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
 }
 
-.stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3);
+div.stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
+}
+
+/* Убираем возможные конфликтующие стили Streamlit */
+div.stButton > button:focus {
+    outline: none !important;
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
 }
 
 /* Медиа-запрос для мобильных устройств */
 @media screen and (max-width: 768px) {
-    .stButton > button {
-        width: 100%;
-        max-width: 100%;
-        padding: 0.85rem 1rem;
+    div.stButton > button {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0.85rem 1rem !important;
     }
 }
 
 /* Для очень маленьких экранов */
 @media screen and (max-width: 480px) {
-    .stButton > button {
-        font-size: 0.9rem;
-        padding: 0.75rem 1rem;
+    div.stButton > button {
+        font-size: 0.9rem !important;
+        padding: 0.75rem 1rem !important;
     }
 }
-
 /* Footer */
 .footer {
     font-size: 0.85rem;

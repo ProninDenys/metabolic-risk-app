@@ -328,7 +328,7 @@ st.markdown("""
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 100%;
+    width: 50%;
     margin-top: 1rem;
     margin-left: 50px;
 }

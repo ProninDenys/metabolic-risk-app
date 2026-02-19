@@ -312,27 +312,37 @@ st.markdown("""
     font-size: 1.5rem;
     line-height: 1;
 }
-
 /* Modern Button */
+.stButton {
+    display: flex;
+    justify-content: center;
+}
+
 .stButton > button {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
-    padding: 0.75rem 2rem;
+    padding: 0.9rem 2rem;
     font-size: 1rem;
     font-weight: 600;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 70%;
-    margin-top: 1rem;
-    margin-left: 200px;
+    width: 60%;
+    margin-top: 1.5rem;
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
 }
 
 .stButton > button:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Mobile fix */
+@media (max-width: 768px) {
+    .stButton > button {
+        width: 100%;
+    }
 }
 
 /* Footer */

@@ -361,6 +361,9 @@ div.stButton > button:focus {
         width: 100% !important;
         max-width: 100% !important;
         padding: 0.85rem 1rem !important;
+        position: relative !important;
+        left: 240px; !important;
+        right: auto; !important;
     }
 }
 
@@ -369,6 +372,9 @@ div.stButton > button:focus {
     div.stButton > button {
         font-size: 0.9rem !important;
         padding: 0.75rem 1rem !important;
+        position: relative !important;
+        left: 240px; !important;
+        right: auto; !important;
     }
 }
             

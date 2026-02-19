@@ -335,7 +335,7 @@ st.markdown("""
     width: 100%;
     max-width: 420px;
 
-    margin: 2rem auto;  
+    margin: 12rem auto;  
 }
 
 .stButton > button:hover {

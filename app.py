@@ -346,7 +346,7 @@ st.markdown("""
 @media (max-width: 768px) {
     .stButton > button {
         width: 100%;
-        margin-left: 50px;
+        margin-left: 60px;
     }
 }
 

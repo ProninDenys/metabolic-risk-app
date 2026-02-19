@@ -332,7 +332,7 @@ st.markdown("""
     transition: all 0.3s ease;
     width: 100%;
     max-width: 420px;
-    margin: 1.5rem auto 0 auto;
+   
     justify-content: center;
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
 }

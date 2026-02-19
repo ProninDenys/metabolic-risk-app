@@ -312,12 +312,14 @@ st.markdown("""
     font-size: 1.5rem;
     line-height: 1;
 }
+
 /* Modern Button */
-/* Button wrapper centering */
-/* Center button wrapper */
+/* Center button container */
 .stButton {
     display: flex;
     justify-content: center;
+    width: 100%;
+    margin: 2rem 0;
 }
 
 /* Button styling */
@@ -331,17 +333,33 @@ st.markdown("""
     border-radius: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-
-    width: 100%;
-    max-width: 420px;
-
-    margin: 12rem auto;  
+    width: auto;
+    min-width: 240px;
+    max-width: 100%;
+    margin: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .stButton > button:hover {
     transform: translateY(-2px);
-    justify-content: center;      
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .stButton > button {
+        width: 100%;
+        max-width: 100%;
+        padding: 0.85rem 1rem;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    .stButton > button {
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+    }
 }
 
 /* Footer */

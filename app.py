@@ -314,17 +314,22 @@ st.markdown("""
 }
 
 /* Modern Button */
-/* Modern Button - Исправленная версия */
-div.stButton {
+/* РЕШЕНИЕ: Принудительное центрирование кнопки */
+.css-1x8cf1d, .css-1x8cf1d.edgvbvh3, div[data-testid="stButton"] {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+div[data-testid="stButton"] {
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
     margin: 2rem 0 !important;
-    padding: 0 !important;
-    text-align: center !important;
 }
 
-div.stButton > button {
+div[data-testid="stButton"] > button {
     background: linear-gradient(135deg, #667eea, #764ba2) !important;
     color: white !important;
     border: none !important;
@@ -339,35 +344,29 @@ div.stButton > button {
     max-width: 100% !important;
     margin: 0 auto !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
-    float: none !important;
-    display: inline-block !important;
     position: relative !important;
-    left: auto !important;
-    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
 }
 
-div.stButton > button:hover {
-    transform: translateY(-2px) !important;
+div[data-testid="stButton"] > button:hover {
+    transform: translateX(-50%) translateY(-2px) !important;
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
 }
 
-div.stButton > button:focus {
-    outline: none !important;
-    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
-}
-
-
+/* Медиа-запросы */
 @media screen and (max-width: 768px) {
-    div.stButton > button {
-        width: 100% !important;
-        max-width: 100% !important;
+    div[data-testid="stButton"] > button {
+        width: 90% !important;
+        max-width: 90% !important;
         padding: 0.85rem 1rem !important;
     }
 }
 
-
 @media screen and (max-width: 480px) {
-    div.stButton > button {
+    div[data-testid="stButton"] > button {
+        width: 100% !important;
+        max-width: 100% !important;
         font-size: 0.9rem !important;
         padding: 0.75rem 1rem !important;
     }
@@ -406,18 +405,6 @@ div.stButton > button:focus {
         
 }
             
-            /* СУПЕР-ПРИНУДИТЕЛЬНОЕ ЦЕНТРИРОВАНИЕ */
-section.main > div.block-container div[data-testid="stButton"] {
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
-}
-
-section.main > div.block-container div[data-testid="stButton"] button {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    display: block !important;
-}
 </style>
 """, unsafe_allow_html=True)
 

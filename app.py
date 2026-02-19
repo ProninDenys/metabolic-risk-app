@@ -322,15 +322,15 @@ st.markdown("""
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
-    padding: 0.9rem 2rem;
+    padding: 0.75rem 2rem;
     font-size: 1rem;
     font-weight: 600;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 60%;
-    margin-top: 1.5rem;
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+    width: 100%;
+    margin-top: 1rem;
+    margin-left: 0;
 }
 
 .stButton > button:hover {

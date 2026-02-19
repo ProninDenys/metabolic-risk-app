@@ -332,13 +332,13 @@ st.markdown("""
     transition: all 0.3s ease;
     width: 100%;
     max-width: 420px;
-   
-    justify-content: center;
+    margin: 1.5rem auto 0 auto;
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
 }
 
 .stButton > button:hover {
     transform: translateY(-2px);
+    justify-content: center;      
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3);
 }
 

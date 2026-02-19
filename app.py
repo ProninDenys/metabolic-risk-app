@@ -351,13 +351,12 @@ div.stButton > button:hover {
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
 }
 
-/* Убираем возможные конфликтующие стили Streamlit */
 div.stButton > button:focus {
     outline: none !important;
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
 }
 
-/* Медиа-запрос для мобильных устройств */
+
 @media screen and (max-width: 768px) {
     div.stButton > button {
         width: 100% !important;
@@ -366,13 +365,14 @@ div.stButton > button:focus {
     }
 }
 
-/* Для очень маленьких экранов */
+
 @media screen and (max-width: 480px) {
     div.stButton > button {
         font-size: 0.9rem !important;
         padding: 0.75rem 1rem !important;
     }
 }
+            
 /* Footer */
 .footer {
     font-size: 0.85rem;
@@ -403,6 +403,20 @@ div.stButton > button:focus {
     box-shadow: 
         0 20px 40px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        
+}
+            
+            /* СУПЕР-ПРИНУДИТЕЛЬНОЕ ЦЕНТРИРОВАНИЕ */
+section.main > div.block-container div[data-testid="stButton"] {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+section.main > div.block-container div[data-testid="stButton"] button {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -538,10 +552,7 @@ def percentile_to_demo_output(percentile: int) -> dict:
             )
         }
 
-# ======================================================
-# HEADER (ВАШ ОРИГИНАЛЬНЫЙ ТЕКСТ)
-# ======================================================
-# Центрирование кнопки
+
 st.markdown('<div class="main-title">Early Metabolic Risk Assessment</div>', unsafe_allow_html=True)
 
 st.markdown("""
@@ -553,7 +564,7 @@ and is not intended for diagnosis or clinical decision-making.
 """, unsafe_allow_html=True)
 
 # ======================================================
-# USER INPUTS (ВАШ ОРИГИНАЛЬНЫЙ ТЕКСТ)
+# USER INPUTS 
 # ======================================================
 st.subheader("Enter biomarker values")
 
@@ -587,7 +598,6 @@ if st.button("Assess metabolic pattern"):
         
         
         # Animated Percentage Display
-        # Сначала определим цвет для кольца
         if demo['card_class'] == 'low':
             ring_color = '#10b981'
         elif demo['card_class'] == 'borderline':
@@ -624,8 +634,7 @@ if st.button("Assess metabolic pattern"):
         </div>
         ''', unsafe_allow_html=True)
         
-        
-        # Заголовок категории
+       
         st.markdown(f'''
         <div class="risk-category">
             <span class="risk-icon">{demo["icon"]}</span>
@@ -633,7 +642,7 @@ if st.button("Assess metabolic pattern"):
         </div>
         ''', unsafe_allow_html=True)
         
-        # Интерпретация
+       
         st.markdown(f'<p style="color: #4b5563; margin-bottom: 1.5rem; font-size: 1.1rem;">{demo["interpretation"]}</p>', unsafe_allow_html=True)
         
         # What drives this result
@@ -645,7 +654,7 @@ if st.button("Assess metabolic pattern"):
             <ul class="driver-list">
         ''', unsafe_allow_html=True)
         
-        # Каждый пункт списка отдельно
+  
         for driver in demo['drivers']:
             st.markdown(f'<li>{driver}</li>', unsafe_allow_html=True)
         
@@ -654,7 +663,7 @@ if st.button("Assess metabolic pattern"):
         </div>
         ''', unsafe_allow_html=True)
         
-        # Why this signal matters
+        
         st.markdown('''
         <div style="margin-top: 1.5rem;">
             <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 0.75rem;">
@@ -670,10 +679,10 @@ if st.button("Assess metabolic pattern"):
         </div>
         ''', unsafe_allow_html=True)
         
-        # Закрываем карточку
+        
         st.markdown('</div>', unsafe_allow_html=True)
         
-        # Footer (ВАШ ОРИГИНАЛЬНЫЙ ТЕКСТ)
+      
         st.markdown('''
         <div class="footer glass">
             Percentiles are computed relative to a fixed reference population used during model validation. 
@@ -682,10 +691,10 @@ if st.button("Assess metabolic pattern"):
         </div>
         ''', unsafe_allow_html=True)
         
-        # Закрываем контейнер результатов
+       
         st.markdown('</div>', unsafe_allow_html=True)
 
-# Show placeholder when no analysis yet
+
 else:
     st.markdown('''
     <div style="text-align: center; padding: 3rem 2rem; color: #9ca3af; font-size: 1rem;">
@@ -694,3 +703,5 @@ else:
         <div>Enter biomarker values and click "Assess metabolic pattern" to begin</div>
     </div>
     ''', unsafe_allow_html=True)
+
+    

@@ -314,6 +314,7 @@ st.markdown("""
 }
 /* Modern Button */
 /* Button wrapper centering */
+/* Center button wrapper */
 .stButton {
     display: flex;
     justify-content: center;
@@ -330,24 +331,17 @@ st.markdown("""
     border-radius: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
+
     width: 100%;
     max-width: 420px;
-    margin: 1.5rem auto 0 auto;
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+
+    margin: 2rem auto;  
 }
 
 .stButton > button:hover {
     transform: translateY(-2px);
     justify-content: center;      
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3);
-}
-
-/* Mobile fix */
-@media (max-width: 768px) {
-    .stButton > button {
-        width: 100%;
-        margin-left: 60px;
-    }
 }
 
 /* Footer */

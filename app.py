@@ -342,7 +342,7 @@ div.stButton > button {
     display: inline-block !important;
     position: relative !important;
     left: auto !important;
-    right: -200px; !important;
+    right: -250px; !important;
 }
 
 div.stButton > button:hover {

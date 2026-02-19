@@ -341,8 +341,8 @@ div.stButton > button {
     float: none !important;
     display: inline-block !important;
     position: relative !important;
-    left: auto !important;
-    right: -250px; !important;
+    left: 240px; !important;
+    right: auto; !important;
 }
 
 div.stButton > button:hover {

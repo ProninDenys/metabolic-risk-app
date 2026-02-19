@@ -313,24 +313,27 @@ st.markdown("""
     line-height: 1;
 }
 /* Modern Button */
+/* Button wrapper centering */
 .stButton {
     display: flex;
     justify-content: center;
 }
 
+/* Button styling */
 .stButton > button {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
-    padding: 0.75rem 2rem;
+    padding: 0.85rem 2rem;
     font-size: 1rem;
     font-weight: 600;
-    border-radius: 12px;
+    border-radius: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 110%;
-    margin-top: 1rem;
-    
+    width: 100%;
+    max-width: 420px;
+    margin: 1.5rem auto 0 auto;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
 }
 
 .stButton > button:hover {

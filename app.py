@@ -330,7 +330,7 @@ st.markdown("""
     transition: all 0.3s ease;
     width: 110%;
     margin-top: 1rem;
-    margin-left: 50px;
+    
 }
 
 .stButton > button:hover {
@@ -342,6 +342,7 @@ st.markdown("""
 @media (max-width: 768px) {
     .stButton > button {
         width: 100%;
+        margin-left: 50px;
     }
 }
 

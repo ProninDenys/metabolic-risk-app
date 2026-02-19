@@ -314,22 +314,16 @@ st.markdown("""
 }
 
 /* Modern Button */
-/* РЕШЕНИЕ: Принудительное центрирование кнопки */
-.css-1x8cf1d, .css-1x8cf1d.edgvbvh3, div[data-testid="stButton"] {
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
-    text-align: center !important;
-}
-
-div[data-testid="stButton"] {
+div.stButton {
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
     margin: 2rem 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
 }
 
-div[data-testid="stButton"] > button {
+div.stButton > button {
     background: linear-gradient(135deg, #667eea, #764ba2) !important;
     color: white !important;
     border: none !important;
@@ -342,31 +336,37 @@ div[data-testid="stButton"] > button {
     width: auto !important;
     min-width: 240px !important;
     max-width: 100% !important;
-    margin: 0 auto !important;
+    margin: 30px; !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    float: none !important;
+    display: inline-block !important;
     position: relative !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    left: auto !important;
+    right: auto !important;
 }
 
-div[data-testid="stButton"] > button:hover {
-    transform: translateX(-50%) translateY(-2px) !important;
+div.stButton > button:hover {
+    transform: translateY(-2px) !important;
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
 }
 
-/* Медиа-запросы */
+div.stButton > button:focus {
+    outline: none !important;
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
+}
+
+
 @media screen and (max-width: 768px) {
-    div[data-testid="stButton"] > button {
-        width: 90% !important;
-        max-width: 90% !important;
+    div.stButton > button {
+        width: 100% !important;
+        max-width: 100% !important;
         padding: 0.85rem 1rem !important;
     }
 }
 
+
 @media screen and (max-width: 480px) {
-    div[data-testid="stButton"] > button {
-        width: 100% !important;
-        max-width: 100% !important;
+    div.stButton > button {
         font-size: 0.9rem !important;
         padding: 0.75rem 1rem !important;
     }
@@ -404,7 +404,7 @@ div[data-testid="stButton"] > button:hover {
         inset 0 1px 0 rgba(255, 255, 255, 0.6);
         
 }
-            
+
 </style>
 """, unsafe_allow_html=True)
 

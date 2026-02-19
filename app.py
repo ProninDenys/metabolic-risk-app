@@ -373,7 +373,7 @@ div.stButton > button:focus {
         font-size: 0.9rem !important;
         padding: 0.75rem 1rem !important;
         position: relative !important;
-        left: 140px; !important;
+        left: 100px; !important;
         
     }
 }

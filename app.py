@@ -336,13 +336,13 @@ div.stButton > button {
     width: auto !important;
     min-width: 240px !important;
     max-width: 100% !important;
-    margin: 30px; !important;
+    margin: 0 auto !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
     float: none !important;
     display: inline-block !important;
     position: relative !important;
     left: auto !important;
-    right: auto !important;
+    right: -30px; !important;
 }
 
 div.stButton > button:hover {

@@ -341,7 +341,7 @@ div.stButton > button {
     float: none !important;
     display: inline-block !important;
     position: relative !important;
-    left: 240px; !important;
+    left: 230px; !important;
     right: auto; !important;
 }
 

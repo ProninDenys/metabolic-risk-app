@@ -434,35 +434,27 @@ model = load_model()
 metadata = load_metadata()
 
 # ======================================================
-# DEBUG: MODEL INSPECTION (TEMPORARY)
+# EXTRACT PIPELINE COMPONENTS
 # ======================================================
 
-st.write("=== MODEL TYPE ===")
-st.write(type(model))
+imputer = model.named_steps["imputer"]
+scaler = model.named_steps["scaler"]
+logreg = model.named_steps["model"]
 
-st.write("=== MODEL OBJECT ===")
-st.write(model)
+# Logistic Regression weights
+weights = logreg.coef_[0]
+intercept = logreg.intercept_[0]
 
-if hasattr(model, "named_steps"):
-    st.write("=== PIPELINE STEPS ===")
-    st.write(model.named_steps)
+# Feature order
+feature_names = metadata["features"]
 
-    for name, step in model.named_steps.items():
-        st.write(f"STEP: {name}")
-        st.write("TYPE:", type(step))
+st.write("Feature order:", feature_names)
+st.write("Weights:", weights)
+st.write("Intercept:", intercept)
 
-        if hasattr(step, "coef_"):
-            st.write("COEFFICIENTS:", step.coef_)
-            st.write("INTERCEPT:", step.intercept_)
-
-        if hasattr(step, "mean_"):
-            st.write("SCALER MEAN:", step.mean_)
-            st.write("SCALER SCALE:", step.scale_)
-else:
-    st.write("=== NOT A PIPELINE ===")
-    if hasattr(model, "coef_"):
-        st.write("COEFFICIENTS:", model.coef_)
-        st.write("INTERCEPT:", model.intercept_)
+# Scaler statistics
+st.write("Scaler mean:", scaler.mean_)
+st.write("Scaler scale:", scaler.scale_)
 
 
 # ======================================================

@@ -425,10 +425,10 @@ div.stButton > button:focus {
 
 div.stDownloadButton {
     display: flex !important;
-    justify-content: relative; !important;
+    justify-content: center !important;
+    align-items: center !important;
     width: 100% !important;
     margin: 2rem 0 !important;
-    right: -30px;
 }
 
 div.stDownloadButton > button {
@@ -443,7 +443,40 @@ div.stDownloadButton > button {
     transition: all 0.3s ease !important;
     min-width: 240px !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
-    right: 30px;
+}
+
+div.stDownloadButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
+}
+            
+            /* ============================= */
+/* Deviation Card Animation */
+/* ============================= */
+
+.deviation-card {
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #ffffff, #f3f4f6);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(229, 231, 235, 0.6);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.deviation-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+    background: linear-gradient(145deg, #ffffff, #eef2ff);
+}
+
+.deviation-title {
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.deviation-card:hover .deviation-title {
+    color: #667eea;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -951,15 +984,15 @@ if st.button("Assess metabolic pattern"):
             color = "#7c2d12"
 
         st.markdown(f"""
-        <div style="margin-top:10px; padding:10px; border-radius:12px; background:#f9fafb;">
-            <div style="font-weight:600; color:{color};">
-                {item["deviation_text"]}
-            </div>
-            <div style="font-size:0.9rem; color:#6b7280;">
-                {item["deviation_level"]}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+<div class="deviation-card">
+    <div class="deviation-title" style="color:{color};">
+        {item["deviation_text"]}
+    </div>
+    <div style="font-size:0.9rem; color:#6b7280;">
+        {item["deviation_level"]}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
     # ==================================================
     # SCALE + CATEGORY

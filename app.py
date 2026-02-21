@@ -476,17 +476,21 @@ div.stDownloadButton > button:hover {
     .deviation-card {
         padding: 10px;
         border-radius: 12px;
-        left: 185px;
+        left: -185px;
         position: relative;
     }
 
     .deviation-title {
         font-size: 0.9rem;
+        left: -185px;
+        position: relative;
     }
 
     .deviation-card:hover {
         transform: none; /* убираем подскок на мобильных */
         box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+        left: -185px;
+        position: relative;
 }
             
             

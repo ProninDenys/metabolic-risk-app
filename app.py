@@ -430,6 +430,7 @@ div.stDownloadButton {
     width: 100% !important;
     margin: 2rem 0 !important;
     left: -140px;
+    position: relative;
 }
 
 div.stDownloadButton > button {
@@ -444,11 +445,15 @@ div.stDownloadButton > button {
     transition: all 0.3s ease !important;
     min-width: 240px !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    left: -140px;
+    position: relative;
 }
 
 div.stDownloadButton > button:hover {
     transform: translateY(-2px) !important;
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
+    left: -140px;
+    position: relative;
 }
             
 /* ============================= */

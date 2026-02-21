@@ -694,6 +694,14 @@ if st.button("Assess metabolic pattern"):
     </div>
     """, unsafe_allow_html=True)
 
+    with st.expander("Model Debug Info (Engineering View)", expanded=False):
+        st.write("Feature order:", feature_names)
+        st.write("Weights:", weights)
+        st.write("Intercept:", intercept)
+        st.write("Scaler mean:", scaler.mean_)
+        st.write("Scaler scale:", scaler.scale_)
+
+
     # Footer
     st.markdown("""
     <div class="footer glass">
@@ -707,12 +715,6 @@ if st.button("Assess metabolic pattern"):
     # DEBUG SECTION (Collapsed)
     # ================================
 
-    with st.expander("Model Debug Info (Engineering View)", expanded=False):
-        st.write("Feature order:", feature_names)
-        st.write("Weights:", weights)
-        st.write("Intercept:", intercept)
-        st.write("Scaler mean:", scaler.mean_)
-        st.write("Scaler scale:", scaler.scale_)
 
 else:
     st.markdown("""

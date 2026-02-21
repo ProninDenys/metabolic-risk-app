@@ -598,13 +598,51 @@ if st.button("Assess metabolic pattern"):
             "BMXBMI": bmi
         }])
 
+        # ----------------------------
+        # MODEL PREDICTION
+        # ----------------------------
         raw_score = model.predict_proba(user_df)[0, 1]
+
+        # ----------------------------
+        # EXPLAINABILITY
+        # ----------------------------
+
+        imputed = imputer.transform(user_df)
+        scaled = scaler.transform(imputed)
+        scaled_values = scaled[0]
+
+        raw_contributions = weights * scaled_values
+        abs_contributions = np.abs(raw_contributions)
+
+        total = abs_contributions.sum()
+
+        if total != 0:
+            contribution_percent = abs_contributions / total * 100
+        else:
+            contribution_percent = np.zeros_like(abs_contributions)
+
+        explain_data = []
+
+        for name, pct, raw in zip(feature_names, contribution_percent, raw_contributions):
+            explain_data.append({
+                "feature": name,
+                "percent": round(float(pct), 1),
+                "raw": float(raw)
+            })
+
+        explain_data = sorted(
+            explain_data,
+            key=lambda x: x["percent"],
+            reverse=True
+        )
+
+        # continue flow
         percentile = score_to_percentile(raw_score)
         demo = percentile_to_demo_output(percentile)
 
-    # ================================
+    # ==================================================
     # VISUAL RESULT
-    # ================================
+    # ==================================================
 
     if demo['card_class'] == 'low':
         ring_color = '#10b981'
@@ -628,10 +666,7 @@ if st.button("Assess metabolic pattern"):
     </div>
     """, unsafe_allow_html=True)
 
-    # ================================
     # SCALE BAR
-    # ================================
-
     st.markdown(f"""
     <div class="scale-container">
         <div class="scale-bar">
@@ -645,10 +680,7 @@ if st.button("Assess metabolic pattern"):
     </div>
     """, unsafe_allow_html=True)
 
-    # ================================
-    # CATEGORY + TEXT
-    # ================================
-
+    # CATEGORY
     st.markdown(f"""
     <div class="risk-category">
         <span class="risk-icon">{demo["icon"]}</span>
@@ -661,7 +693,7 @@ if st.button("Assess metabolic pattern"):
         unsafe_allow_html=True
     )
 
-    # Drivers
+    # DRIVERS
     st.markdown("""
     <div>
         <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 1rem;">
@@ -678,7 +710,7 @@ if st.button("Assess metabolic pattern"):
     </div>
     """, unsafe_allow_html=True)
 
-    # Why this matters
+    # WHY THIS MATTERS
     st.markdown("""
     <div style="margin-top: 1.5rem;">
         <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 0.75rem;">
@@ -694,15 +726,17 @@ if st.button("Assess metabolic pattern"):
     </div>
     """, unsafe_allow_html=True)
 
-
+    # DEBUG PANEL
     with st.expander("Model Debug Info (Engineering View)", expanded=False):
         st.write("Feature order:", feature_names)
         st.write("Weights:", weights)
         st.write("Intercept:", intercept)
         st.write("Scaler mean:", scaler.mean_)
-        st.write("Scaler scale:", scaler.scale_) 
-        
-    # Footer
+        st.write("Scaler scale:", scaler.scale_)
+        st.write("Explainability (sorted):")
+        st.write(explain_data)
+
+    # FOOTER
     st.markdown("""
     <div class="footer glass">
         Percentiles are computed relative to a fixed reference population used during model validation.
@@ -710,10 +744,6 @@ if st.button("Assess metabolic pattern"):
         exploratory purposes only. It does not represent an individual diagnosis or prediction.
     </div>
     """, unsafe_allow_html=True)
-
-    # ================================
-    # DEBUG SECTION (Collapsed)
-    # ===============================
 
 else:
     st.markdown("""

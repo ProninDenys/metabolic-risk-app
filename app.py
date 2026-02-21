@@ -433,6 +433,37 @@ def load_metadata():
 model = load_model()
 metadata = load_metadata()
 
+# ======================================================
+# DEBUG: MODEL INSPECTION (TEMPORARY)
+# ======================================================
+
+st.write("=== MODEL TYPE ===")
+st.write(type(model))
+
+st.write("=== MODEL OBJECT ===")
+st.write(model)
+
+if hasattr(model, "named_steps"):
+    st.write("=== PIPELINE STEPS ===")
+    st.write(model.named_steps)
+
+    for name, step in model.named_steps.items():
+        st.write(f"STEP: {name}")
+        st.write("TYPE:", type(step))
+
+        if hasattr(step, "coef_"):
+            st.write("COEFFICIENTS:", step.coef_)
+            st.write("INTERCEPT:", step.intercept_)
+
+        if hasattr(step, "mean_"):
+            st.write("SCALER MEAN:", step.mean_)
+            st.write("SCALER SCALE:", step.scale_)
+else:
+    st.write("=== NOT A PIPELINE ===")
+    if hasattr(model, "coef_"):
+        st.write("COEFFICIENTS:", model.coef_)
+        st.write("INTERCEPT:", model.intercept_)
+
 
 # ======================================================
 # LOAD REFERENCE DISTRIBUTION (SSOT)

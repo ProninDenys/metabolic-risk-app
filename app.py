@@ -581,6 +581,17 @@ weights = logreg.coef_[0]
 intercept = logreg.intercept_[0]
 feature_names = metadata["features"]
 
+# =====================================
+# HUMAN-READABLE FEATURE LABELS
+# =====================================
+
+FEATURE_LABELS = {
+    "LBXGLU": "Fasting Glucose",
+    "LBXGH": "HbA1c",
+    "LBXTR": "Triglycerides",
+    "BMXBMI": "Body Mass Index"
+}
+
 
 # ======================================================
 # RUN ANALYSIS
@@ -684,7 +695,7 @@ if st.button("Assess metabolic pattern"):
         st.markdown(f"""
         <div style="margin-top:12px;">
             <div style="display:flex; justify-content:space-between;">
-                <span><strong>{item['feature']}</strong> {arrow}</span>
+                <span><strong>{FEATURE_LABELS.get(item['feature'], item['feature'])}</strong> {arrow}</span>
                 <span>{item['percent']}%</span>
             </div>
             <div style="height:8px; background:#f3f4f6; border-radius:6px; margin-top:4px;">

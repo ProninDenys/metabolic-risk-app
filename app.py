@@ -612,6 +612,7 @@ def interpret_z_score(z):
     direction = "above" if z > 0 else "below"
 
     return level, direction
+
 # ======================================================
 # RUN ANALYSIS
 # ======================================================
@@ -649,7 +650,6 @@ if st.button("Assess metabolic pattern"):
         else:
             contribution_percent = np.zeros_like(abs_contributions)
 
-        # ВАЖНО: вне if/else
         explain_data = []
 
         for name, pct, raw, z in zip(
@@ -661,12 +661,21 @@ if st.button("Assess metabolic pattern"):
 
             direction = "increase" if raw > 0 else "decrease"
 
+            level, z_direction = interpret_z_score(z)
+
+            deviation_text = (
+                f"{FEATURE_LABELS.get(name, name)} "
+                f"is {z_direction} population mean by {abs(round(float(z),2))} σ"
+            )
+
             explain_data.append({
                 "feature": name,
                 "percent": round(float(pct), 1),
                 "raw": float(raw),
                 "direction": direction,
-                "z_score": round(float(z), 2)
+                "z_score": round(float(z), 2),
+                "deviation_text": deviation_text,
+                "deviation_level": level
             })
 
         explain_data = sorted(
@@ -705,7 +714,7 @@ if st.button("Assess metabolic pattern"):
     """, unsafe_allow_html=True)
 
     # ==================================================
-    # EXPLAINABILITY PANEL (Professional View)
+    # FEATURE CONTRIBUTIONS
     # ==================================================
 
     st.markdown("""
@@ -730,42 +739,45 @@ if st.button("Assess metabolic pattern"):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        
-        # ==================================================
-# POPULATION DEVIATION ANALYSIS
-# ==================================================
 
-st.markdown("""
-<div style="margin-top:2.5rem;">
-<strong style="font-size:1.1rem;">Population Deviation Analysis</strong>
-</div>
-""", unsafe_allow_html=True)
+    # ==================================================
+    # POPULATION DEVIATION ANALYSIS
+    # ==================================================
 
-for item in explain_data:
-
-    z = item["z_score"]
-
-    if abs(z) < 0.5:
-        color = "#6b7280"
-    elif abs(z) < 1:
-        color = "#f59e0b"
-    elif abs(z) < 2:
-        color = "#ef4444"
-    else:
-        color = "#7c2d12"
-
-    st.markdown(f"""
-    <div style="margin-top:10px; padding:10px; border-radius:12px; background:#f9fafb;">
-        <div style="font-weight:600; color:{color};">
-            {item["deviation_text"]}
-        </div>
-        <div style="font-size:0.9rem; color:#6b7280;">
-            {item["deviation_level"]}
-        </div>
+    st.markdown("""
+    <div style="margin-top:2.5rem;">
+    <strong style="font-size:1.1rem;">Population Deviation Analysis</strong>
     </div>
-    """, unsafe_allow_html=True) 
-    
-    # SCALE BAR
+    """, unsafe_allow_html=True)
+
+    for item in explain_data:
+
+        z = item["z_score"]
+
+        if abs(z) < 0.5:
+            color = "#6b7280"
+        elif abs(z) < 1:
+            color = "#f59e0b"
+        elif abs(z) < 2:
+            color = "#ef4444"
+        else:
+            color = "#7c2d12"
+
+        st.markdown(f"""
+        <div style="margin-top:10px; padding:10px; border-radius:12px; background:#f9fafb;">
+            <div style="font-weight:600; color:{color};">
+                {item["deviation_text"]}
+            </div>
+            <div style="font-size:0.9rem; color:#6b7280;">
+                {item["deviation_level"]}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # ==================================================
+    # SCALE + CATEGORY
+    # ==================================================
+
     st.markdown(f"""
     <div class="scale-container">
         <div class="scale-bar">
@@ -779,7 +791,6 @@ for item in explain_data:
     </div>
     """, unsafe_allow_html=True)
 
-    # CATEGORY
     st.markdown(f"""
     <div class="risk-category">
         <span class="risk-icon">{demo["icon"]}</span>
@@ -791,58 +802,6 @@ for item in explain_data:
         f'<p style="color: #4b5563; margin-bottom: 1.5rem; font-size: 1.1rem;">{demo["interpretation"]}</p>',
         unsafe_allow_html=True
     )
-
-    # DRIVERS
-    st.markdown("""
-    <div>
-        <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 1rem;">
-            What drives this result:
-        </strong>
-        <ul class="driver-list">
-    """, unsafe_allow_html=True)
-
-    for driver in demo['drivers']:
-        st.markdown(f"<li>{driver}</li>", unsafe_allow_html=True)
-
-    st.markdown("""
-        </ul>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # WHY THIS MATTERS
-    st.markdown("""
-    <div style="margin-top: 1.5rem;">
-        <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 0.75rem;">
-            Why this signal matters:
-        </strong>
-        <p style="color: #4b5563; margin: 0; line-height: 1.6;">
-    """, unsafe_allow_html=True)
-
-    st.markdown(demo["why_this_matters"], unsafe_allow_html=False)
-
-    st.markdown("""
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # DEBUG PANEL
-    with st.expander("Model Debug Info (Engineering View)", expanded=False):
-        st.write("Feature order:", feature_names)
-        st.write("Weights:", weights)
-        st.write("Intercept:", intercept)
-        st.write("Scaler mean:", scaler.mean_)
-        st.write("Scaler scale:", scaler.scale_)
-        st.write("Explainability (sorted):")
-        st.write(explain_data)
-
-    # FOOTER
-    st.markdown("""
-    <div class="footer glass">
-        Percentiles are computed relative to a fixed reference population used during model validation.
-        This output reflects population-level statistical patterns and is intended for research and
-        exploratory purposes only. It does not represent an individual diagnosis or prediction.
-    </div>
-    """, unsafe_allow_html=True)
 
 else:
     st.markdown("""

@@ -801,7 +801,7 @@ def generate_pdf_report(percentile, demo, explain_data, inputs, source_url):
 # RUN ANALYSIS
 # ======================================================
 
-if st.session_state.analysis_done:
+if st.button("Assess metabolic pattern"):
     st.session_state.analysis_done = True
 
     with st.spinner('Analyzing metabolic patterns...'):

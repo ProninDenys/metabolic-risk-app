@@ -456,23 +456,7 @@ div.stDownloadButton > button:hover {
     position: relative;
 }
 
-@media screen and (max-width: 768px) {
-    div.stButton > button,
-    div.stDownloadButton > button {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-}
 
-@media screen and (max-width: 480px) {
-    div.stButton > button,
-    div.stDownloadButton > button {
-        width: 100% !important;
-        max-width: 100% !important;
-        left: 115px;
-        position: relative;
-    }
-}
             
 /* ============================= */
 /* Deviation Card Animation */

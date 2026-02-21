@@ -803,6 +803,57 @@ if st.button("Assess metabolic pattern"):
         unsafe_allow_html=True
     )
 
+        # ==================================================
+    # WHAT DRIVES THIS RESULT
+    # ==================================================
+
+    st.markdown('''
+    <div>
+        <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 1rem;">
+            What drives this result:
+        </strong>
+        <ul class="driver-list">
+    ''', unsafe_allow_html=True)
+
+    for driver in demo['drivers']:
+        st.markdown(f'<li>{driver}</li>', unsafe_allow_html=True)
+
+    st.markdown('''
+        </ul>
+    </div>
+    ''', unsafe_allow_html=True)
+
+    # ==================================================
+    # WHY THIS SIGNAL MATTERS
+    # ==================================================
+
+    st.markdown('''
+    <div style="margin-top: 1.5rem;">
+        <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 0.75rem;">
+            Why this signal matters:
+        </strong>
+        <p style="color: #4b5563; margin: 0; line-height: 1.6;">
+    ''', unsafe_allow_html=True)
+
+    st.markdown(f'{demo["why_this_matters"]}', unsafe_allow_html=False)
+
+    st.markdown('''
+        </p>
+    </div>
+    ''', unsafe_allow_html=True)
+
+    # ==================================================
+    # FOOTER
+    # ==================================================
+
+    st.markdown('''
+    <div class="footer glass">
+        Percentiles are computed relative to a fixed reference population used during model validation. 
+        This output reflects population-level statistical patterns and is intended for research and 
+        exploratory purposes only. It does not represent an individual diagnosis or prediction.
+    </div>
+    ''', unsafe_allow_html=True)
+
 else:
     st.markdown("""
     <div style="text-align: center; padding: 3rem 2rem; color: #9ca3af; font-size: 1rem;">

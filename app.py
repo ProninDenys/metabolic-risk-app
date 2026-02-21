@@ -466,14 +466,14 @@ div.stDownloadButton > button {
 /* Tablet */
 @media screen and (max-width: 768px) {
     div.stDownloadButton {
-        left: 100px;
+        left: 70px;
     }
 
     div.stDownloadButton > button {
         width: 100% !important;
         max-width: 100% !important;
         padding: 0.85rem 1rem !important;
-        left: 100px;
+        left: 70px;
     }
 }
 

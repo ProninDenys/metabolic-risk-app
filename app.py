@@ -694,6 +694,10 @@ if st.button("Assess metabolic pattern"):
     </div>
     """, unsafe_allow_html=True)
 
+    # ================================
+    # DEBUG SECTION (Collapsed)
+    # ================================
+
     with st.expander("Model Debug Info (Engineering View)", expanded=False):
         st.write("Feature order:", feature_names)
         st.write("Weights:", weights)
@@ -701,6 +705,14 @@ if st.button("Assess metabolic pattern"):
         st.write("Scaler mean:", scaler.mean_)
         st.write("Scaler scale:", scaler.scale_)
 
+else:
+    st.markdown("""
+    <div style="text-align: center; padding: 3rem 2rem; color: #9ca3af; font-size: 1rem;">
+        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">⟳</div>
+        <div style="font-weight: 500; margin-bottom: 0.5rem;">Ready for analysis</div>
+        <div>Enter biomarker values and click "Assess metabolic pattern" to begin</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # Footer
     st.markdown("""
@@ -711,16 +723,4 @@ if st.button("Assess metabolic pattern"):
     </div>
     """, unsafe_allow_html=True)
 
-    # ================================
-    # DEBUG SECTION (Collapsed)
-    # ================================
-
-
-else:
-    st.markdown("""
-    <div style="text-align: center; padding: 3rem 2rem; color: #9ca3af; font-size: 1rem;">
-        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">⟳</div>
-        <div style="font-weight: 500; margin-bottom: 0.5rem;">Ready for analysis</div>
-        <div>Enter biomarker values and click "Assess metabolic pattern" to begin</div>
-    </div>
-    """, unsafe_allow_html=True)
+    

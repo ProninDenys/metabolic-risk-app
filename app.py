@@ -369,7 +369,8 @@ div.stButton > button:focus {
 
 
 @media screen and (max-width: 768px) {
-    div.stButton > button {
+    div.stButton > button,
+    div.stDownloadButton > button {
         width: 100% !important;
         max-width: 100% !important;
         padding: 0.85rem 1rem !important;
@@ -381,7 +382,8 @@ div.stButton > button:focus {
 
 
 @media screen and (max-width: 480px) {
-    div.stButton > button {
+    div.stButton > button,
+    div.stDownloadButton > button {
         font-size: 0.9rem !important;
         padding: 0.75rem 1rem !important;
         position: relative !important;
@@ -455,7 +457,6 @@ div.stDownloadButton > button:hover {
     left: 115px;
     position: relative;
 }
-
 
             
 /* ============================= */

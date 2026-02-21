@@ -469,6 +469,8 @@ div.stDownloadButton > button:hover {
     div.stDownloadButton > button {
         width: 100% !important;
         max-width: 100% !important;
+        left: 115px;
+        position: relative;
     }
 }
             

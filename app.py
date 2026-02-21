@@ -592,7 +592,6 @@ FEATURE_LABELS = {
     "BMXBMI": "Body Mass Index"
 }
 
-
 # ======================================================
 # RUN ANALYSIS
 # ======================================================
@@ -630,7 +629,8 @@ if st.button("Assess metabolic pattern"):
         else:
             contribution_percent = np.zeros_like(abs_contributions)
 
-            explain_data = []
+        # ВАЖНО: вне if/else
+        explain_data = []
 
         for name, pct, raw, z in zip(
             feature_names,

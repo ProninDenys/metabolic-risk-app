@@ -23,6 +23,9 @@ st.set_page_config(
     layout="centered"
 )
 
+if "analysis_done" not in st.session_state:
+    st.session_state.analysis_done = False
+
 # ======================================================
 # MODERN UI STYLES - NEUMORPHISM + GRADIENTS
 # ======================================================
@@ -420,6 +423,26 @@ div.stButton > button:focus {
         
 }
 
+            div.stDownloadButton {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 2rem 0 !important;
+}
+
+div.stDownloadButton > button {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.85rem 2rem !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    border-radius: 16px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    min-width: 240px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -778,7 +801,8 @@ def generate_pdf_report(percentile, demo, explain_data, inputs, source_url):
 # RUN ANALYSIS
 # ======================================================
 
-if st.button("Assess metabolic pattern"):
+if st.session_state.analysis_done:
+    st.session_state.analysis_done = True
 
     with st.spinner('Analyzing metabolic patterns...'):
         time.sleep(1)
@@ -1020,7 +1044,7 @@ if st.button("Assess metabolic pattern"):
         demo,
         explain_data,
         inputs_for_pdf,
-        source_url="https://yourdomain.com"
+        source_url="https://early-metabolic-risk.streamlit.app/"
     )
 
     st.download_button(

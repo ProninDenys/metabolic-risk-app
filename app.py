@@ -433,29 +433,6 @@ def load_metadata():
 model = load_model()
 metadata = load_metadata()
 
-# ======================================================
-# EXTRACT PIPELINE COMPONENTS
-# ======================================================
-
-imputer = model.named_steps["imputer"]
-scaler = model.named_steps["scaler"]
-logreg = model.named_steps["model"]
-
-# Logistic Regression weights
-weights = logreg.coef_[0]
-intercept = logreg.intercept_[0]
-
-# Feature order
-feature_names = metadata["features"]
-
-st.write("Feature order:", feature_names)
-st.write("Weights:", weights)
-st.write("Intercept:", intercept)
-
-# Scaler statistics
-st.write("Scaler mean:", scaler.mean_)
-st.write("Scaler scale:", scaler.scale_)
-
 
 # ======================================================
 # LOAD REFERENCE DISTRIBUTION (SSOT)
@@ -593,14 +570,27 @@ with col2:
     bmi     = st.number_input("Body Mass Index (BMI)", 15.0, 45.0, 24.0)
 
 # ======================================================
+# EXTRACT PIPELINE COMPONENTS
+# ======================================================
+
+imputer = model.named_steps["imputer"]
+scaler = model.named_steps["scaler"]
+logreg = model.named_steps["model"]
+
+weights = logreg.coef_[0]
+intercept = logreg.intercept_[0]
+feature_names = metadata["features"]
+
+
+# ======================================================
 # RUN ANALYSIS
 # ======================================================
 
 if st.button("Assess metabolic pattern"):
-    
+
     with st.spinner('Analyzing metabolic patterns...'):
         time.sleep(1)
-        
+
         user_df = pd.DataFrame([{
             "LBXGLU": glucose,
             "LBXGH": hba1c,
@@ -611,113 +601,124 @@ if st.button("Assess metabolic pattern"):
         raw_score = model.predict_proba(user_df)[0, 1]
         percentile = score_to_percentile(raw_score)
         demo = percentile_to_demo_output(percentile)
-        
-        
-        # Animated Percentage Display
-        if demo['card_class'] == 'low':
-            ring_color = '#10b981'
-        elif demo['card_class'] == 'borderline':
-            ring_color = '#f59e0b'
-        else:
-            ring_color = '#ef4444'
-        
-        dashoffset = 565 - (percentile / 100 * 565)
-        
-        st.markdown(f'''
-        <div class="percent-container">
-            <div class="percent-value">{percentile}</div>
-            <div class="progress-ring">
-                <svg width="200" height="200">
-                    <circle class="progress-ring-bg" cx="100" cy="100" r="90"></circle>
-                    <circle class="progress-ring-fill" cx="100" cy="100" r="90" 
-                            style="stroke: {ring_color}; stroke-dashoffset: {dashoffset}"></circle>
-                </svg>
-            </div>
-        </div>
-        ''', unsafe_allow_html=True)
-        
-        # Beautiful Scale Bar
-        st.markdown(f'''
-        <div class="scale-container">
-            <div class="scale-bar">
-                <div class="scale-marker" style="left: {percentile}%;"></div>
-            </div>
-            <div class="scale-labels">
-                <span class="scale-low">Low Risk</span>
-                <span class="scale-borderline">Borderline</span>
-                <span class="scale-elevated">Elevated Risk</span>
-            </div>
-        </div>
-        ''', unsafe_allow_html=True)
-        
-       
-        st.markdown(f'''
-        <div class="risk-category">
-            <span class="risk-icon">{demo["icon"]}</span>
-            {demo["category"]}
-        </div>
-        ''', unsafe_allow_html=True)
-        
-       
-        st.markdown(f'<p style="color: #4b5563; margin-bottom: 1.5rem; font-size: 1.1rem;">{demo["interpretation"]}</p>', unsafe_allow_html=True)
-        
-        # What drives this result
-        st.markdown('''
-        <div>
-            <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 1rem;">
-                What drives this result:
-            </strong>
-            <ul class="driver-list">
-        ''', unsafe_allow_html=True)
-        
-  
-        for driver in demo['drivers']:
-            st.markdown(f'<li>{driver}</li>', unsafe_allow_html=True)
-        
-        st.markdown('''
-            </ul>
-        </div>
-        ''', unsafe_allow_html=True)
-        
-        
-        st.markdown('''
-        <div style="margin-top: 1.5rem;">
-            <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 0.75rem;">
-                Why this signal matters:
-            </strong>
-            <p style="color: #4b5563; margin: 0; line-height: 1.6;">
-        ''', unsafe_allow_html=True)
-        
-        st.markdown(f'{demo["why_this_matters"]}', unsafe_allow_html=False)
-        
-        st.markdown('''
-            </p>
-        </div>
-        ''', unsafe_allow_html=True)
-        
-        
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-      
-        st.markdown('''
-        <div class="footer glass">
-            Percentiles are computed relative to a fixed reference population used during model validation. 
-            This output reflects population-level statistical patterns and is intended for research and 
-            exploratory purposes only. It does not represent an individual diagnosis or prediction.
-        </div>
-        ''', unsafe_allow_html=True)
-        
-       
-        st.markdown('</div>', unsafe_allow_html=True)
 
+    # ================================
+    # VISUAL RESULT
+    # ================================
+
+    if demo['card_class'] == 'low':
+        ring_color = '#10b981'
+    elif demo['card_class'] == 'borderline':
+        ring_color = '#f59e0b'
+    else:
+        ring_color = '#ef4444'
+
+    dashoffset = 565 - (percentile / 100 * 565)
+
+    st.markdown(f"""
+    <div class="percent-container">
+        <div class="percent-value">{percentile}</div>
+        <div class="progress-ring">
+            <svg width="200" height="200">
+                <circle class="progress-ring-bg" cx="100" cy="100" r="90"></circle>
+                <circle class="progress-ring-fill" cx="100" cy="100" r="90"
+                        style="stroke: {ring_color}; stroke-dashoffset: {dashoffset}"></circle>
+            </svg>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ================================
+    # SCALE BAR
+    # ================================
+
+    st.markdown(f"""
+    <div class="scale-container">
+        <div class="scale-bar">
+            <div class="scale-marker" style="left: {percentile}%;"></div>
+        </div>
+        <div class="scale-labels">
+            <span class="scale-low">Low Risk</span>
+            <span class="scale-borderline">Borderline</span>
+            <span class="scale-elevated">Elevated Risk</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ================================
+    # CATEGORY + TEXT
+    # ================================
+
+    st.markdown(f"""
+    <div class="risk-category">
+        <span class="risk-icon">{demo["icon"]}</span>
+        {demo["category"]}
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown(
+        f'<p style="color: #4b5563; margin-bottom: 1.5rem; font-size: 1.1rem;">{demo["interpretation"]}</p>',
+        unsafe_allow_html=True
+    )
+
+    # Drivers
+    st.markdown("""
+    <div>
+        <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 1rem;">
+            What drives this result:
+        </strong>
+        <ul class="driver-list">
+    """, unsafe_allow_html=True)
+
+    for driver in demo['drivers']:
+        st.markdown(f"<li>{driver}</li>", unsafe_allow_html=True)
+
+    st.markdown("""
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Why this matters
+    st.markdown("""
+    <div style="margin-top: 1.5rem;">
+        <strong style="color: #1f2937; font-size: 1rem; display: block; margin-bottom: 0.75rem;">
+            Why this signal matters:
+        </strong>
+        <p style="color: #4b5563; margin: 0; line-height: 1.6;">
+    """, unsafe_allow_html=True)
+
+    st.markdown(demo["why_this_matters"], unsafe_allow_html=False)
+
+    st.markdown("""
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Footer
+    st.markdown("""
+    <div class="footer glass">
+        Percentiles are computed relative to a fixed reference population used during model validation.
+        This output reflects population-level statistical patterns and is intended for research and
+        exploratory purposes only. It does not represent an individual diagnosis or prediction.
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ================================
+    # DEBUG SECTION (Collapsed)
+    # ================================
+
+    with st.expander("Model Debug Info (Engineering View)", expanded=False):
+        st.write("Feature order:", feature_names)
+        st.write("Weights:", weights)
+        st.write("Intercept:", intercept)
+        st.write("Scaler mean:", scaler.mean_)
+        st.write("Scaler scale:", scaler.scale_)
 
 else:
-    st.markdown('''
+    st.markdown("""
     <div style="text-align: center; padding: 3rem 2rem; color: #9ca3af; font-size: 1rem;">
         <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">⟳</div>
         <div style="font-weight: 500; margin-bottom: 0.5rem;">Ready for analysis</div>
         <div>Enter biomarker values and click "Assess metabolic pattern" to begin</div>
     </div>
-    ''', unsafe_allow_html=True)
-
-    
+    """, unsafe_allow_html=True)

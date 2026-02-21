@@ -425,7 +425,7 @@ div.stButton > button:focus {
 
 div.stDownloadButton {
     display: flex !important;
-    justify-content: center !important;
+    justify-content: relative; !important;
     width: 100% !important;
     margin: 2rem 0 !important;
     left: -230px;

@@ -389,6 +389,106 @@ div.stButton > button:focus {
         
     }
 }
+ /* =============================== */
+/* PRIMARY BUTTON (Assess) */
+/* =============================== */
+
+div.stButton {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 2rem 0 !important;
+}
+
+div.stButton > button {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.85rem 2rem !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    border-radius: 16px !important;
+    cursor: pointer !important;
+    min-width: 240px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+    left: 230px; !important;   /* DESKTOP CENTER */
+}
+
+/* Tablet */
+@media screen and (max-width: 768px) {
+    div.stButton > button {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0.85rem 1rem !important;
+        left: 140px !important;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+    div.stButton > button {
+        font-size: 0.9rem !important;
+        padding: 0.75rem 1rem !important;
+        left: 60px !important;
+    }
+}
+
+
+/* =============================== */
+/* DOWNLOAD BUTTON */
+/* =============================== */
+
+div.stDownloadButton {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 2rem 0 !important;
+    position: relative;
+    left: 115px;   /* DESKTOP CENTER */
+}
+
+div.stDownloadButton > button {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.85rem 2rem !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    border-radius: 16px !important;
+    cursor: pointer !important;
+    min-width: 240px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    position: relative;
+    left: 115px;
+}
+
+/* Tablet */
+@media screen and (max-width: 768px) {
+    div.stDownloadButton {
+        left: 140px;
+    }
+
+    div.stDownloadButton > button {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0.85rem 1rem !important;
+        left: 140px;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+    div.stDownloadButton {
+        left: 60px;
+    }
+
+    div.stDownloadButton > button {
+        font-size: 0.9rem !important;
+        padding: 0.75rem 1rem !important;
+        left: 60px;
+    }
+}
             
 /* Footer */
 .footer {
@@ -422,41 +522,7 @@ div.stButton > button:focus {
         inset 0 1px 0 rgba(255, 255, 255, 0.6);
         
 }
-
-div.stDownloadButton {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    width: 100% !important;
-    margin: 2rem 0 !important;
-    left: 115px;
-    position: relative;
-}
-
-div.stDownloadButton > button {
-    background: linear-gradient(135deg, #667eea, #764ba2) !important;
-    color: white !important;
-    border: none !important;
-    padding: 0.85rem 2rem !important;
-    font-size: 1rem !important;
-    font-weight: 600 !important;
-    border-radius: 16px !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    min-width: 240px !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
-    left: 115px;
-    position: relative;
-}
-
-div.stDownloadButton > button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
-    left: 115px;
-    position: relative;
-}
-
-            
+      
 /* ============================= */
 /* Deviation Card Animation */
 /* ============================= */

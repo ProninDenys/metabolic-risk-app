@@ -5,6 +5,15 @@ import numpy as np
 import pandas as pd
 import json
 import time
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+from io import BytesIO
+from datetime import datetime
 
 # ======================================================
 # PAGE CONFIG
@@ -613,6 +622,158 @@ def interpret_z_score(z):
 
     return level, direction
 
+def generate_pdf_report(percentile, demo, explain_data, inputs, source_url):
+
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        rightMargin=40,
+        leftMargin=40,
+        topMargin=50,
+        bottomMargin=40
+    )
+
+    elements = []
+    styles = getSampleStyleSheet()
+
+    # Custom styles
+    title_style = styles["Heading1"]
+    section_style = styles["Heading2"]
+    normal_style = styles["Normal"]
+
+    # ===============================
+    # HEADER
+    # ===============================
+
+    elements.append(Paragraph("EARLY METABOLIC RISK ASSESSMENT", title_style))
+    elements.append(Spacer(1, 0.2 * inch))
+
+    elements.append(Paragraph(
+        f"Research Demonstration Report<br/>"
+        f"Generated: {datetime.now().strftime('%d %b %Y')}<br/>"
+        f"Source: {source_url}",
+        normal_style
+    ))
+
+    elements.append(Spacer(1, 0.4 * inch))
+
+    # ===============================
+    # OVERALL RISK SUMMARY
+    # ===============================
+
+    elements.append(Paragraph("Overall Risk Summary", section_style))
+    elements.append(Spacer(1, 0.2 * inch))
+
+    elements.append(Paragraph(f"Risk Percentile: {percentile}", normal_style))
+    elements.append(Paragraph(f"Risk Category: {demo['category']}", normal_style))
+
+    elements.append(Spacer(1, 0.4 * inch))
+
+    # ===============================
+    # INPUT BIOMARKERS
+    # ===============================
+
+    elements.append(Paragraph("Input Biomarker Values", section_style))
+    elements.append(Spacer(1, 0.2 * inch))
+
+    biomarker_table = [["Biomarker", "Value"]]
+    for name, value in inputs.items():
+        biomarker_table.append([name, value])
+
+    table = Table(biomarker_table, colWidths=[3.2 * inch, 2 * inch])
+    table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.whitesmoke),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+        ("FONTNAME", (0, 0), (-1, -1), "Helvetica"),
+        ("FONTSIZE", (0, 0), (-1, -1), 10),
+        ("ALIGN", (1, 1), (-1, -1), "RIGHT")
+    ]))
+
+    elements.append(table)
+    elements.append(Spacer(1, 0.4 * inch))
+
+    # ===============================
+    # FEATURE CONTRIBUTIONS
+    # ===============================
+
+    elements.append(Paragraph("Model Contribution Analysis", section_style))
+    elements.append(Spacer(1, 0.2 * inch))
+
+    contrib_table = [["Biomarker", "Contribution", "Direction"]]
+
+    for item in explain_data:
+        direction_text = "Risk-increasing" if item["direction"] == "increase" else "Risk-reducing"
+        contrib_table.append([
+            FEATURE_LABELS.get(item["feature"], item["feature"]),
+            f"{item['percent']}%",
+            direction_text
+        ])
+
+    contrib = Table(contrib_table, colWidths=[2.8 * inch, 1 * inch, 1.4 * inch])
+    contrib.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.whitesmoke),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+        ("FONTNAME", (0, 0), (-1, -1), "Helvetica"),
+        ("FONTSIZE", (0, 0), (-1, -1), 10),
+    ]))
+
+    elements.append(contrib)
+    elements.append(Spacer(1, 0.4 * inch))
+
+    # ===============================
+    # POPULATION DEVIATION
+    # ===============================
+
+    elements.append(Paragraph("Population Deviation Analysis", section_style))
+    elements.append(Spacer(1, 0.2 * inch))
+
+    deviation_table = [["Biomarker", "Deviation (σ)"]]
+
+    for item in explain_data:
+        deviation_table.append([
+            FEATURE_LABELS.get(item["feature"], item["feature"]),
+            f"{item['z_score']} σ"
+        ])
+
+    deviation = Table(deviation_table, colWidths=[3.2 * inch, 2 * inch])
+    deviation.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.whitesmoke),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+        ("FONTNAME", (0, 0), (-1, -1), "Helvetica"),
+        ("FONTSIZE", (0, 0), (-1, -1), 10),
+    ]))
+
+    elements.append(deviation)
+    elements.append(Spacer(1, 0.4 * inch))
+
+    # ===============================
+    # INTERPRETATION
+    # ===============================
+
+    elements.append(Paragraph("Interpretation", section_style))
+    elements.append(Spacer(1, 0.2 * inch))
+    elements.append(Paragraph(demo["interpretation"], normal_style))
+    elements.append(Spacer(1, 0.2 * inch))
+    elements.append(Paragraph(demo["why_this_matters"], normal_style))
+    elements.append(Spacer(1, 0.5 * inch))
+
+    # ===============================
+    # DISCLAIMER
+    # ===============================
+
+    elements.append(Paragraph(
+        "Percentiles are computed relative to a fixed reference population used during model validation. "
+        "This output reflects population-level statistical patterns and is intended for research and "
+        "exploratory purposes only. It does not represent an individual diagnosis or prediction.",
+        normal_style
+    ))
+
+    doc.build(elements)
+    buffer.seek(0)
+
+    return buffer
+
 # ======================================================
 # RUN ANALYSIS
 # ======================================================
@@ -823,6 +984,7 @@ if st.button("Assess metabolic pattern"):
     </div>
     ''', unsafe_allow_html=True)
 
+    
     # ==================================================
     # WHY THIS SIGNAL MATTERS
     # ==================================================
@@ -842,6 +1004,32 @@ if st.button("Assess metabolic pattern"):
     </div>
     ''', unsafe_allow_html=True)
 
+        # ==================================================
+    # DOWNLOAD PDF BUTTON
+    # ==================================================
+
+    inputs_for_pdf = {
+        "Fasting Glucose": f"{glucose} mg/dL",
+        "HbA1c": f"{hba1c} %",
+        "Triglycerides": f"{tg} mg/dL",
+        "Body Mass Index": f"{bmi}"
+    }
+
+    pdf_buffer = generate_pdf_report(
+        percentile,
+        demo,
+        explain_data,
+        inputs_for_pdf,
+        source_url="https://yourdomain.com"
+    )
+
+    st.download_button(
+        label="Download PDF Report",
+        data=pdf_buffer,
+        file_name="metabolic_risk_report.pdf",
+        mime="application/pdf"
+    )
+
     # ==================================================
     # FOOTER
     # ==================================================
@@ -853,12 +1041,3 @@ if st.button("Assess metabolic pattern"):
         exploratory purposes only. It does not represent an individual diagnosis or prediction.
     </div>
     ''', unsafe_allow_html=True)
-
-else:
-    st.markdown("""
-    <div style="text-align: center; padding: 3rem 2rem; color: #9ca3af; font-size: 1rem;">
-        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">⟳</div>
-        <div style="font-weight: 500; margin-bottom: 0.5rem;">Ready for analysis</div>
-        <div>Enter biomarker values and click "Assess metabolic pattern" to begin</div>
-    </div>
-    """, unsafe_allow_html=True)

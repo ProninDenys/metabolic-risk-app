@@ -473,20 +473,20 @@ div.stDownloadButton > button {
         width: 100% !important;
         max-width: 100% !important;
         padding: 0.85rem 1rem !important;
-        left: 160px;
+        left: 120px;
     }
 }
 
 /* Mobile */
 @media screen and (max-width: 480px) {
     div.stDownloadButton {
-        left: 90px;
+        left: 50px;
     }
 
     div.stDownloadButton > button {
         font-size: 0.9rem !important;
         padding: 0.75rem 1rem !important;
-        left: 90px;
+        left: 50px;
     }
 }
             

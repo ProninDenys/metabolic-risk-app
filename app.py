@@ -423,7 +423,7 @@ div.stButton > button:focus {
         
 }
 
-            div.stDownloadButton {
+div.stDownloadButton {
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
@@ -442,6 +442,7 @@ div.stDownloadButton > button {
     transition: all 0.3s ease !important;
     min-width: 240px !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    left: 230px;
 }
 </style>
 """, unsafe_allow_html=True)

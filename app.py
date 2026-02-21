@@ -480,13 +480,13 @@ div.stDownloadButton > button {
 /* Mobile */
 @media screen and (max-width: 480px) {
     div.stDownloadButton {
-        left: 50px;
+        left: 30px;
     }
 
     div.stDownloadButton > button {
         font-size: 0.9rem !important;
         padding: 0.75rem 1rem !important;
-        left: 40px;
+        left: 30px;
     }
 }
             

@@ -476,7 +476,7 @@ div.stDownloadButton > button:hover {
     .deviation-card {
         padding: 10px;
         border-radius: 12px;
-        left: 85px;
+        left: 185px;
         position: relative;
     }
 

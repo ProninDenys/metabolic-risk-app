@@ -598,14 +598,12 @@ if st.button("Assess metabolic pattern"):
             "BMXBMI": bmi
         }])
 
-        # ----------------------------
         # MODEL PREDICTION
-        # ----------------------------
         raw_score = model.predict_proba(user_df)[0, 1]
 
-        # ----------------------------
-        # EXPLAINABILITY
-        # ----------------------------
+        # =============================
+        # EXPLAINABILITY CALCULATION
+        # =============================
 
         imputed = imputer.transform(user_df)
         scaled = scaler.transform(imputed)
@@ -624,10 +622,13 @@ if st.button("Assess metabolic pattern"):
         explain_data = []
 
         for name, pct, raw in zip(feature_names, contribution_percent, raw_contributions):
+            direction = "increase" if raw > 0 else "decrease"
+
             explain_data.append({
                 "feature": name,
                 "percent": round(float(pct), 1),
-                "raw": float(raw)
+                "raw": float(raw),
+                "direction": direction
             })
 
         explain_data = sorted(
@@ -636,7 +637,6 @@ if st.button("Assess metabolic pattern"):
             reverse=True
         )
 
-        # continue flow
         percentile = score_to_percentile(raw_score)
         demo = percentile_to_demo_output(percentile)
 
@@ -665,6 +665,33 @@ if st.button("Assess metabolic pattern"):
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # ==================================================
+    # EXPLAINABILITY PANEL (Professional View)
+    # ==================================================
+
+    st.markdown("""
+    <div style="margin-top:2rem;">
+    <strong style="font-size:1.1rem;">Feature Contributions</strong>
+    </div>
+    """, unsafe_allow_html=True)
+
+    for item in explain_data:
+
+        color = "#ef4444" if item["direction"] == "increase" else "#10b981"
+        arrow = "↑" if item["direction"] == "increase" else "↓"
+
+        st.markdown(f"""
+        <div style="margin-top:12px;">
+            <div style="display:flex; justify-content:space-between;">
+                <span><strong>{item['feature']}</strong> {arrow}</span>
+                <span>{item['percent']}%</span>
+            </div>
+            <div style="height:8px; background:#f3f4f6; border-radius:6px; margin-top:4px;">
+                <div style="width:{item['percent']}%; height:8px; background:{color}; border-radius:6px;"></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     # SCALE BAR
     st.markdown(f"""

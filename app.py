@@ -456,6 +456,40 @@ div.stDownloadButton > button:hover {
     position: relative;
 }
             
+@media screen and (max-width: 768px) {
+
+    .deviation-card {
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    .deviation-title {
+        font-size: 0.95rem;
+    }
+
+    .deviation-card:hover {
+        transform: translateY(-3px);
+    }
+            
+    @media screen and (max-width: 480px) {
+
+    .deviation-card {
+        padding: 10px;
+        border-radius: 12px;
+        left: 85px;
+        position: relative;
+    }
+
+    .deviation-title {
+        font-size: 0.9rem;
+    }
+
+    .deviation-card:hover {
+        transform: none; /* убираем подскок на мобильных */
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+            
+            
 /* ============================= */
 /* Deviation Card Animation */
 /* ============================= */

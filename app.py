@@ -428,7 +428,7 @@ div.stDownloadButton {
     justify-content: relative; !important;
     width: 100% !important;
     margin: 2rem 0 !important;
-    left: -230px;
+    right: -230px;
 }
 
 div.stDownloadButton > button {
@@ -443,7 +443,7 @@ div.stDownloadButton > button {
     transition: all 0.3s ease !important;
     min-width: 240px !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
-    left: -230px;
+    right: 130px;
 }
 </style>
 """, unsafe_allow_html=True)

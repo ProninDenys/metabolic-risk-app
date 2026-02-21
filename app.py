@@ -630,16 +630,23 @@ if st.button("Assess metabolic pattern"):
         else:
             contribution_percent = np.zeros_like(abs_contributions)
 
-        explain_data = []
+            explain_data = []
 
-        for name, pct, raw in zip(feature_names, contribution_percent, raw_contributions):
+        for name, pct, raw, z in zip(
+            feature_names,
+            contribution_percent,
+            raw_contributions,
+            scaled_values
+        ):
+
             direction = "increase" if raw > 0 else "decrease"
 
             explain_data.append({
                 "feature": name,
                 "percent": round(float(pct), 1),
                 "raw": float(raw),
-                "direction": direction
+                "direction": direction,
+                "z_score": round(float(z), 2)
             })
 
         explain_data = sorted(

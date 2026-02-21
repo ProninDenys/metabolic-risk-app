@@ -429,6 +429,7 @@ div.stDownloadButton {
     align-items: center !important;
     width: 100% !important;
     margin: 2rem 0 !important;
+    left: -140px;
 }
 
 div.stDownloadButton > button {
@@ -450,7 +451,7 @@ div.stDownloadButton > button:hover {
     box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3) !important;
 }
             
-            /* ============================= */
+/* ============================= */
 /* Deviation Card Animation */
 /* ============================= */
 

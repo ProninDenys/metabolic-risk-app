@@ -428,6 +428,7 @@ div.stDownloadButton {
     justify-content: center !important;
     width: 100% !important;
     margin: 2rem 0 !important;
+    left: 230px;
 }
 
 div.stDownloadButton > button {
